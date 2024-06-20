@@ -57,7 +57,6 @@ class OAuth2Handler(BaseHTTPRequestHandler):
 def run_server(server_class=CustomHTTPServer, handler_class=OAuth2Handler, port=8080) -> str | None:
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)
-    httpd.id_token = None
     while not httpd.id_token:
         httpd.handle_request()
     return httpd.id_token
@@ -77,12 +76,12 @@ def command():
         "grant_type": "implicit",
         "response_type": "id_token",
         "scope": "openid + profile",
-        # "redirect_uri": "https://routing.development.bjshomedelivery.com/",
+        # "redirect_uri": "http://localhost:8080",
         "nonce": str(uuid.uuid4()),
 
     }
     webbrowser.open(
-        "https://perimeter.development.bjshomedelivery.com/oauth/authorize?{}".format(
+        "<keycloak-login-endpoint>?{}".format(
             urllib.parse.urlencode(sso_keys)))
     print("Waiting for authentication...")
     response = run_server()

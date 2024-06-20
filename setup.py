@@ -21,7 +21,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'bjs-cli=auth.cli:cli',
+            'auth-cli=auth.cli:cli',
         ],
     },
     cmdclass={"install": post_install}
